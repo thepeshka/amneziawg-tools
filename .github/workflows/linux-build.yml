@@ -28,8 +28,8 @@ jobs:
         name: ubuntu-22.04-amneziawg-tools
         path: ./src/build
 
-  Build-for-Alpine:
-    name: Build for Alpine
+  Build-for-Alpine-AMD64:
+    name: Build for Alpine AMD64
     runs-on: ubuntu-latest
     container:
       image: alpine:3.19
@@ -49,19 +49,45 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: alpine-3.19-amneziawg-tools
+        name: alpine-3.19-x64-amneziawg-tools
+        path: ./src/build
+
+  Build-for-Alpine-ARM64:
+    name: Build for Alpine ARM64
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: alpine:3.19
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Build AmneziaWG tools
+      run: |
+        apk add linux-headers build-base &&
+        cd src &&
+        make &&
+        mkdir build &&
+        cp wg ./build/awg &&
+        cp wg-quick/linux.bash ./build/awg-quick
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: alpine-3.19-x64-amneziawg-tools
         path: ./src/build
 
   GitHub-Release:
     name: GitHub Release
-    needs: [Build-for-Ubuntu, Build-for-Alpine]
+    needs: [Build-for-Ubuntu, Build-for-Alpine-AMD64, Build-for-Alpine-ARM64]
     strategy:
       matrix:
         include:
           - os: "ubuntu"
-            release: "22.04"
+            release: "24.04"
           - os: "alpine"
             release: "3.19"
+          - os: "alpine"
+            release: "3.19-arm"
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
