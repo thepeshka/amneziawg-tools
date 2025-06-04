@@ -69,7 +69,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         platforms: linux/arm64
-        push: false
+        load: true
         file: alpine-arm.dockerfile
 
     - name: Build AmneziaWG tools
