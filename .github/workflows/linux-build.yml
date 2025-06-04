@@ -59,28 +59,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-      with:
-        platforms: linux/arm64
-        images: thepeshka/amneziawg-tools
-
-    - name: Build
-      uses: docker/build-push-action@v5
-      with:
-        platforms: linux/arm64
-        load: true
-        tags: thepeshka/amneziawg-tools
-
     - name: Build AmneziaWG tools
       run: |
-        docker run -v $(PWD)/build:/app/build thepeshka/amneziawg-tools
+        docker build -t awg-tools-build . &&
+        docker run -v ./build:/output awg-tools-build
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: alpine-3.19-arm64-amneziawg-tools
-        path: ./src/build
+        path: ./build
 
   GitHub-Release:
     name: GitHub Release
