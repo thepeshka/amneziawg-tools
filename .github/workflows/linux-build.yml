@@ -70,6 +70,7 @@ jobs:
       with:
         platforms: linux/arm64
         load: true
+        tags: thepeshka/amneziawg-tools
 
     - name: Build AmneziaWG tools
       run: |
