@@ -8,4 +8,4 @@ RUN apk add linux-headers build-base
 
 COPY build.sh /build.sh
 
-RUN /build.sh
+CMD /build.sh
