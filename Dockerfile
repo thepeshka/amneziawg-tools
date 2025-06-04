@@ -6,6 +6,6 @@ COPY src /app
 
 RUN apk add linux-headers build-base
 
-COPY build-alpine-arm.sh /build.sh
+COPY build.sh /build.sh
 
 RUN /build.sh
