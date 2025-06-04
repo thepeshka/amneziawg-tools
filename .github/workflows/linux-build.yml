@@ -35,8 +35,7 @@ jobs:
       image: alpine:3.19
     steps:
     - name: Checkout
-      run: |
-        git clone https://github.com/thepeshka/amneziawg-tools
+      uses: actions/checkout@v4
 
     - name: Build AmneziaWG tools
       run: |
@@ -74,7 +73,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: alpine-3.19-x64-amneziawg-tools
+        name: alpine-3.19-arm64-amneziawg-tools
         path: ./src/build
 
   GitHub-Release:
