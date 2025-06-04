@@ -65,7 +65,7 @@ jobs:
       run: |
         apk add linux-headers build-base &&
         cd src &&
-        make CC=aarch64-linux-gnu-gcc &&
+        make CC=aarch64-alpine-linux-musl-gcc &&
         mkdir build &&
         cp wg ./build/awg &&
         cp wg-quick/linux.bash ./build/awg-quick
