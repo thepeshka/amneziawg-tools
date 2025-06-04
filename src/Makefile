@@ -15,7 +15,6 @@ RUNSTATEDIR ?= /var/run
 WITH_BASHCOMPLETION ?=
 WITH_WGQUICK ?=
 WITH_SYSTEMDUNITS ?=
-TARGET_ARCH ?=
 
 ifeq ($(WITH_BASHCOMPLETION),)
 ifneq ($(strip $(wildcard $(BASHCOMPDIR))),)
@@ -73,9 +72,6 @@ VERSION := $(patsubst "%",%,$(filter "%",$(file < version.h)))
 wg: wincompat/libc.o wincompat/init.o wincompat/loader.o wincompat/resources.o
 wincompat/resources.o: wincompat/resources.rc wincompat/manifest.xml
 	$(WINDRES) -DVERSION_STR=$(VERSION) -O coff -c 65001 -i $< -o $@
-endif
-ifeq ($(TARGET_ARCH),arm64)
-CC := aarch64-linux-gnu-gcc
 endif
 
 ifneq ($(V),1)
