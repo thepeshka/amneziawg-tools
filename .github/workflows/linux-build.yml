@@ -70,7 +70,6 @@ jobs:
       with:
         platforms: linux/arm64
         load: true
-        file: alpine-arm.dockerfile
 
     - name: Build AmneziaWG tools
       run: |
